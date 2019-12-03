@@ -1399,4 +1399,128 @@ among Hematoxylin–eosin colours are highlighted.
 \end{figure}}
 \end{frame}
 
+\section{Histopathological Noise Characterization}
+
+
+\begin{frame}{The problem}
+
+\begin{itemize}
+	\item Nuclei in H&E images are often difficult to segment by automatically approaches due multiple noise sources 
+\end{itemize}
+\includegraphics[width=\textwidth]{images/ejemplo.png}
+
+\end{frame}
+
+\begin{frame}{Contribution}
+
+\begin{itemize}
+\item A Method for noise characterization to enhance nuclei detection methods
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}{pipeline}
+\includegraphics[width=\textwidth]{images/pipe.png}
+\end{frame}
+
+
+\begin{frame}{Noiselets}
+\begin{itemize}
+\item Are a set of functions orthogonal (maximally incoherent) to wavelets functions
+\pause
+\item The signal is spread out
+\pause
+\item Are complex valued
+
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{The approach}
+\centering \includegraphics[width=0.7\textwidth]{images/Esquema.png}
+\end{frame}
+
+\begin{frame}{Tile Subsampling}
+\begin{itemize}
+\item The image is subsampled in N tiles of $m \times m$ pixels
+\pause
+\item Each tile is labelled with 0 or 1 if inside has any cell information
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Noiselet Characterization}
+\begin{itemize}
+\item Each tile is decomposed by the Noiselet transform
+\pause
+\item Those coeficients are used to train an adaboost classifier to perform nuclei and non nuclei task
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Non Nuclei Substraction}
+\begin{itemize}
+\item Once time the noiselet features are evaluated into the classifier an image is recover with those clasified tiles with cells information
+\end{itemize}{}
+\end{frame}{}
+
+
+\begin{frame}{Experimental Setup}
+\begin{itemize}
+\item MoNuSeg Dataset MICCAI 2018
+\item 30 Histological images from 7 different tissue (Breast, liver, kidney Prostate, Bladder, Colon, Stomach) 
+\item Around $22.000$ manually annotated cells
+\item A SVM linear Kernel
+\item The method was evaluated using two different scales
+
+\end{itemize}
+\end{frame}
+
+
+% \begin{frame}{Results}
+% ACC = 0.876 --- Fscore =  0.835
+%     \begin{table}
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|c|} 
+% \toprule
+% CP*                        & Fiji*                      & Watershed & \textbf{Proposed} & \textbf{proposed 2} & CNN2*  & CNN3*   \\ 
+% \hline
+% 0.597 & 0.649 & 0.667     & 0.689 & 0.694    & 0.693 & 0.762  \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+% \centering
+% Mean Dice Score. *Kumar et al. 2017
+% \end{frame}
+
+
+% \begin{frame}{Future Work}
+% \begin{itemize}
+%  \item To establish more metrics for segmentation commonly used as Hausdorff distance, Jaccard agregated index ..
+%  \pause
+%  \item to establish metrics for nuclei detection as F-score
+%  \pause
+%  \item Use the method to enhance the classification task between benign and malignant cell in a breast cancer data-set
+% \end{itemize}
+
+%  \end{frame}
+\begin{frame}{Results}
+\begin{table}[]
+\resizebox{\textwidth}{!} {
+\begin{tabular}{c|ccc|c}
+\multicolumn{4}{c}{Real}  & Baseline  \\
+& 8x8    & 16x16  & 32x32    & Watershed \\  \hline \hline
+Precision &  $0.745\pm 0.101$ & $0.748\pm 0.107$  & $0.746\pm 0.108 & $0.803\pm 0.096$     \\\hline
+Recall  & $0.738\pm 0.085$  & $0.738\pm 0.086$  & $0.740\pm 0.086$  & $0.780\pm0.083$     
+\end{tabular}
+}
+\end{table}
+\end{frame}
+
 \end{document}
